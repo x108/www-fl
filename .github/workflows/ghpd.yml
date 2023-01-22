@@ -1,0 +1,21 @@
+on:
+  workflow_dispatch:
+    inputs:
+      data:
+        type: string
+        required: true
+jobs:
+  dghp:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository_owner }}/actions
+          ref: ghpd
+          ssh-key: ${{ secrets.ACTIONS_REPO_SSH_KEY }}
+      - uses: ./
+        with:
+          secrets: ${{ secrets.GHPD }}
